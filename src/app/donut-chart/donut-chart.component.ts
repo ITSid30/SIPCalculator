@@ -38,16 +38,22 @@ export class DonutChartComponent implements OnChanges {
           label: 'SIP Breakdown',
           data: [this.investment, this.interest],
           backgroundColor: [
+            'rgb(97, 130, 249)',
             'lightblue',
-            'blue',
           ],
           hoverBorderColor: 'white',
           hoverOffset: 4
         }],
       },
       options: {
-        aspectRatio: 2
-      }
+        responsive: true, // Make the chart responsive
+        maintainAspectRatio: false, // Allow chart height to be controlled via CSS
+        plugins: {
+          legend: {
+            position: 'top', // Adjust legend position
+          },
+        },
+      },
     });
   }
 }

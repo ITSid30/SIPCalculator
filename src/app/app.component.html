@@ -1,62 +1,76 @@
-<div class="mx-3">
-  <div class="m-5 bg-body-tertiary">
-    <h1 class="text-bold p-3">SIP Calculator</h1>
-    <div class="row">
-        <div class="col-md-6 col-12 p-4">
-          <div [formGroup]="sipForm" class="p-4">
-            <div class="col-md-12 pb-3">
-                <label class="col-md-8">Monthly Investment: </label>
-                <input class="col-md-4"
-                    type="number"
-                    maxlength="50"
-                    name="monthlyAmount"
-                    formControlName="monthlyAmount"
-                    (change)="calculateAmount()">
-                <ngx-slider [(value)]="sipForm.controls['monthlyAmount'].value"
-                    (valueChange)="onSliderChange($event, 'monthlyAmount')" 
-                    [options]="options">
-                </ngx-slider>
-            </div>
-            <div class="col-md-12 pb-3">
-              <label class="col-md-8">Time Period: </label>
-              <input class="col-md-4"
-                  type="number"
-                  maxlength="3"
-                  name="timePeriod"
-                  formControlName="timePeriod"
-                  (change)="calculateAmount()">
-              <ngx-slider [(value)]="sipForm.controls['timePeriod'].value"
-                  (valueChange)="onSliderChange($event, 'timePeriod')" 
-                  [options]="timePeriodOptions">
-              </ngx-slider>
-            </div>
-            <div class="col-md-12 pb-3">
-              <label class="col-md-8">Expected Returns %: </label>
-              <input class="col-md-4"
-                  type="number"
-                  maxlength=""
-                  name="returns"
-                  formControlName="returns"
-                  (change)="calculateAmount()">
-              <ngx-slider [(value)]="sipForm.controls['returns'].value"
-                  (valueChange)="onSliderChange($event, 'returns')" 
-                  [options]="returnsOptions">
-              </ngx-slider>
-            </div>
-          </div>
-
-          <div class="results m-2">
-            <h4>Invested Amount: <strong>Rs. {{ totalInvestAmt | number:'1.3-3' }}</strong></h4>
-            <h4>Estimated Returns: <strong>Rs. {{ totalInterest | number:'1.3-3' }}</strong></h4>
-            <h4>Total Value: <strong>Rs. {{ totalAmount | number:'1.3-3' }}</strong></h4>
+<div class="container my-5 bg-light shadow-lg rounded">
+  <div class="text-center py-4 bgcolor text-white rounded-top">
+    <h1 class="fw-bold">SIP Calculator</h1>
+  </div>
+  <div class="row g-4 px-4 py-5">
+    <!-- Form Section -->
+    <div class="col-md-6 col-12 p-4 bg-white rounded shadow-sm">
+      <div [formGroup]="sipForm" class="p-3">
+        <!-- Monthly Investment -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Monthly Investment: </label>
+          <div class="d-flex align-items-center">
+            <input class="form-control me-3"
+                type="number"
+                maxlength="50"
+                name="monthlyAmount"
+                formControlName="monthlyAmount"
+                (change)="calculateAmount()"
+                placeholder="Enter amount">
+            <ngx-slider [(value)]="sipForm.controls['monthlyAmount'].value"
+                (valueChange)="onSliderChange($event, 'monthlyAmount')" 
+                [options]="options">
+            </ngx-slider>
           </div>
         </div>
-        <div class="col-md-6 col-12 p-5">
-          <!-- graph section -->
-            <app-donut-chart [investment]="totalInvestAmt"
-                [interest]="totalInterest">
-            </app-donut-chart>
+        <!-- Time Period -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Time Period (years): </label>
+          <div class="d-flex align-items-center">
+            <input class="form-control me-3"
+                type="number"
+                maxlength="3"
+                name="timePeriod"
+                formControlName="timePeriod"
+                (change)="calculateAmount()"
+                placeholder="Enter years">
+            <ngx-slider [(value)]="sipForm.controls['timePeriod'].value"
+                (valueChange)="onSliderChange($event, 'timePeriod')" 
+                [options]="timePeriodOptions">
+            </ngx-slider>
+          </div>
+        </div>
+        <!-- Expected Returns -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Expected Returns (%): </label>
+          <div class="d-flex align-items-center">
+            <input class="form-control me-3"
+                type="number"
+                name="returns"
+                formControlName="returns"
+                (change)="calculateAmount()"
+                placeholder="Enter returns">
+            <ngx-slider [(value)]="sipForm.controls['returns'].value"
+                (valueChange)="onSliderChange($event, 'returns')" 
+                [options]="returnsOptions">
+            </ngx-slider>
+          </div>
         </div>
       </div>
+      <!-- Results -->
+      <div class="results mt-4 bgcolor text-white p-3 rounded">
+        <h4>Invested Amount: <strong>{{ totalInvestAmt | currency:'INR':'symbol':'1.2-2' }}</strong></h4>
+        <h4>Estimated Returns: <strong>{{ totalInterest | currency:'INR':'symbol':'1.2-2' }}</strong></h4>
+        <h4>Total Value: <strong>{{ totalAmount | currency:'INR':'symbol':'1.2-2' }}</strong></h4>
+
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="col-md-6 col-12 bg-body-secondary rounded shadow-sm">
+      <div class="py-2 align-items-center">
+        <app-donut-chart [investment]="totalInvestAmt" [interest]="totalInterest"></app-donut-chart>
+      </div>
+    </div>
   </div>
 </div>
